@@ -1,23 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import SubjectList from './components/SubjectList';
+import SubjectSearch from './containers/SubjectSearch';
 
 function App() {
+  const [results, setResults] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="w-full h-full flex flex-col justify-start items-center dark:bg-black dark:text-green-200">
+      <SubjectSearch onResolved={(res) => setResults(res.data.results)} />
+      {results.length > 0 ? (
+        <SubjectList subjects={results} />
+      ) : null}
     </div>
   );
 }

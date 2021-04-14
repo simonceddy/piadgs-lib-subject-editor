@@ -1,0 +1,10 @@
+@tailwind base;
+
+/* put components here */
+
+.all-center {
+  @apply justify-center items-center;
+}
+
+@tailwind components;
+@tailwind utilities;
