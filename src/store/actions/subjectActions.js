@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export const SET_SUBJECT_TITLES = 'SET_SUBJECT_TITLES';
+export const SET_SUBJECT_SELECTED_TITLES = 'SET_SUBJECT_SELECTED_TITLES';
 export const SET_SUBJECT_NAME = 'SET_SUBJECT_NAME';
 export const SET_SUBJECT_DATA = 'SET_SUBJECT_DATA';
 export const SET_SUBJECT_MESSAGE = 'SET_SUBJECT_MESSAGE';
 
-export const setSubjectTitles = (titles) => ({
-  type: SET_SUBJECT_TITLES,
-  payload: { titles }
+export const setSubjectSelectedTitles = (selectedTitles) => ({
+  type: SET_SUBJECT_SELECTED_TITLES,
+  payload: { selectedTitles }
 });
 
 export const setSubjectName = (name) => ({

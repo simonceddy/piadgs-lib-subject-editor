@@ -7,7 +7,7 @@ function SearchSubjectsForm({ input, setInput, onSubmit = () => null }) {
         e.preventDefault();
         onSubmit(input);
       }}
-      className="flex flex-row items-center justify-around w-1/2"
+      className="flex flex-row items-center justify-around w-full"
     >
       <input
         type="text"

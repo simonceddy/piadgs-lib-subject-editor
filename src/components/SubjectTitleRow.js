@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react';
 import TitleSummary from '../containers/TitleSummary';
 import { COLOUR_CLASS_NAMES } from '../shared/consts';
 
+const titleStyles = 'py-1 px-2 my-0.5 flex flex-1 flex-row justify-between items-center';
+
 function SubjectTitleRow({
   title,
   checked,
@@ -25,14 +27,14 @@ function SubjectTitleRow({
         >
           {viewSummary ? '▲' : '▼'}
         </button>
-        <label
-          htmlFor={`title-subject-${title.id}`}
-          className="py-1 px-2 my-0.5 flex flex-1 flex-row justify-between items-center hover:underline"
-        >
-          <span>
-            {title.title}
-          </span>
-          {isEditing ? (
+        {isEditing ? (
+          <label
+            htmlFor={`title-subject-${title.id}`}
+            className={`${titleStyles} hover:underline`}
+          >
+            <span>
+              {title.title}
+            </span>
             <input
               name={`title-subject-${title.id}`}
               id={`title-subject-${title.id}`}
@@ -42,8 +44,8 @@ function SubjectTitleRow({
               checked={checked}
               onChange={onChange}
             />
-          ) : null}
-        </label>
+          </label>
+        ) : <span className={titleStyles}>{title.title}</span>}
       </div>
       {!viewSummary ? null : <Summary />}
     </div>
