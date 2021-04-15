@@ -1,53 +1,38 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import ThemedButton from '../components/ThemedButton';
 import SubjectWindow from '../components/SubjectWindow';
 import SubjectNameField from '../components/SubjectNameField';
 import SubjectTitleList from '../components/SubjectTitleList';
 import ThemedDiv from '../components/ThemedDiv';
+import {
+  fetchSubject,
+  setSubjectMessage,
+  setSubjectName,
+  setSubjectSelectedTitles, updateSubject
+} from '../store/actions/subjectActions';
 
-function Subject({ subject = {}, onClose }) {
-  const [titles, setTitles] = useState([]);
-
+function Subject({
+  id,
+  onClose,
+  getSubject,
+  data,
+  setName,
+  subjectName,
+  message,
+  setMessage,
+  submitChanges,
+  selectedTitles,
+  setSelectedTitles
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const [editedSubjectName, setEditedSubjectName] = useState(subject.name);
-
-  const [selectedTitles, setSelectedTitles] = useState({});
-
-  const [message, setMessage] = useState(null);
-
-  const handleChecked = (id) => setSelectedTitles({
+  const handleChecked = (titleId) => setSelectedTitles({
     ...selectedTitles,
-    [id]: !selectedTitles[id]
+    [titleId]: !selectedTitles[titleId]
   });
 
-  const setErrorMessage = () => setMessage('There was an error trying to save changes!');
-
-  const submitChanges = () => {
-    axios.post('/subjects/update', { id: subject.id, name: editedSubjectName })
-      .then((res) => {
-        console.log(res);
-        if (res.status !== 200) {
-          setErrorMessage();
-        } else {
-          setMessage('Changes successful!');
-        }
-      })
-      .catch(() => setErrorMessage());
-  };
-
-  useEffect(() => axios.get(`/subjects/${subject.id}`)
-    .then((res) => {
-      console.log(res);
-      if (res.status === 200 && res.data.data.titles) {
-        //
-        setTitles(res.data.data.titles);
-        setSelectedTitles(
-          Object.fromEntries(res.data.data.titles.map(({ id }) => [id, true]))
-        );
-      }
-    }), [subject]);
+  useEffect(() => getSubject(id), [id]);
 
   return (
     <SubjectWindow>
@@ -79,20 +64,20 @@ function Subject({ subject = {}, onClose }) {
       )}
       {isEditing ? (
         <SubjectNameField
-          value={editedSubjectName}
-          setValue={setEditedSubjectName}
+          value={subjectName}
+          setValue={setName}
         />
       ) : (
         <>
           <span className="p-3 text-2xl">
-            {subject.name}
+            {subjectName}
           </span>
         </>
       )}
       <div className="w-full flex flex-col py-4 px-2 overflow-scroll">
-        {titles.length < 1 ? null : (
+        {data.titles && data.titles.length < 1 ? null : (
           <SubjectTitleList
-            titles={titles}
+            titles={data.titles}
             selectedTitles={selectedTitles}
             handleChecked={handleChecked}
             isEditing={isEditing}
@@ -102,7 +87,7 @@ function Subject({ subject = {}, onClose }) {
       {isEditing ? (
         <ThemedDiv className="flex flex-row justify-evenly items-center pb-4 pt-2 mt-3 px-2 border-t w-full">
           <ThemedButton
-            onClick={() => submitChanges()}
+            onClick={() => submitChanges({ id, name: subjectName })}
           >
             Save Changes
           </ThemedButton>
@@ -117,4 +102,19 @@ function Subject({ subject = {}, onClose }) {
   );
 }
 
-export default Subject;
+const mapStateToProps = (state) => ({
+  subjectName: state.subject.name,
+  data: state.subject.data,
+  message: state.subject.message,
+  selectedTitles: state.subject.selectedTitles
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getSubject: (id) => dispatch(fetchSubject(id)),
+  setName: (name) => dispatch(setSubjectName(name)),
+  setMessage: (message) => dispatch(setSubjectMessage(message)),
+  submitChanges: (data) => dispatch(updateSubject(data)),
+  setSelectedTitles: (selectedTitles) => dispatch(setSubjectSelectedTitles(selectedTitles))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Subject);

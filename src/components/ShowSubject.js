@@ -22,7 +22,7 @@ function ShowSubject({ subject = {} }) {
             onClick={() => setVisible(false)}
           />
           <Modal>
-            <Subject onClose={() => setVisible(false)} subject={subject} />
+            <Subject onClose={() => setVisible(false)} id={subject.id} />
           </Modal>
         </div>
       ) : null}
