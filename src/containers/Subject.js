@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ThemedButton from '../components/ThemedButton';
 import SubjectWindow from '../components/SubjectWindow';
@@ -7,15 +7,13 @@ import SubjectTitleList from '../components/SubjectTitleList';
 import ThemedDiv from '../components/ThemedDiv';
 
 function Subject({ subject = {}, onClose }) {
-  const { titles } = subject || [];
+  const [titles, setTitles] = useState([]);
 
   const [isEditing, setIsEditing] = useState(false);
 
   const [editedSubjectName, setEditedSubjectName] = useState(subject.name);
 
-  const [selectedTitles, setSelectedTitles] = useState(
-    Object.fromEntries(titles.map(({ id }) => [id, true]))
-  );
+  const [selectedTitles, setSelectedTitles] = useState({});
 
   const [message, setMessage] = useState(null);
 
@@ -38,6 +36,18 @@ function Subject({ subject = {}, onClose }) {
       })
       .catch(() => setErrorMessage());
   };
+
+  useEffect(() => axios.get(`/subjects/${subject.id}`)
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200 && res.data.data.titles) {
+        //
+        setTitles(res.data.data.titles);
+        setSelectedTitles(
+          Object.fromEntries(res.data.data.titles.map(({ id }) => [id, true]))
+        );
+      }
+    }), [subject]);
 
   return (
     <SubjectWindow>
