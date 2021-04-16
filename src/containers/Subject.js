@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import ThemedButton from '../components/ThemedButton';
 import SubjectWindow from '../components/SubjectWindow';
@@ -12,6 +12,7 @@ import {
   setSubjectSelectedTitles, updateSubject
 } from '../store/actions/subjectActions';
 
+// TODO - less props - split responsibilities
 function Subject({
   id,
   onClose,
@@ -32,7 +33,9 @@ function Subject({
     [titleId]: !selectedTitles[titleId]
   });
 
-  useEffect(() => getSubject(id), [id]);
+  // Is this helping?
+  const fetchData = useCallback(() => getSubject(id), [id]);
+  useEffect(() => fetchData(), [id]);
 
   return (
     <SubjectWindow>

@@ -30,16 +30,21 @@ export const setSubjectMessage = (message) => ({
   payload: { message }
 });
 
-export const updateSubject = (data) => (dispatch) => axios.post('/subjects/update', data)
-  .then((res) => Promise.resolve(dispatch(setSubjectData(res.data.data)))
-    .then(() => dispatch(setSubjectMessage('Changes saved successfully!')))
-    .catch((err) => setSubjectMessage(`Error: ${err.message}`)))
-  .catch((err) => {
-    console.log(err);
-    return dispatch(setSubjectData({}));
-  });
+export const updateSubject = (data) => (dispatch, getState) => {
+  console.log(getState().subject.selectedTitles);
+  return axios.post('/subjects/update', data)
+    .then((res) => Promise.resolve(dispatch(setSubjectData(res.data.data)))
+      .then(() => dispatch(setSubjectMessage('Changes saved successfully!')))
+      .catch((err) => setSubjectMessage(`Error: ${err.message}`)))
+    .catch((err) => {
+      console.log(err);
+      return dispatch(setSubjectData({}));
+    });
+};
 
-export const setData = (data = {}) => (dispatch) => Promise.resolve(dispatch(setSubjectData(data)))
+export const setData = (data = {}) => (dispatch) => Promise.resolve(
+  dispatch(setSubjectData(data))
+)
   .then(() => Promise.resolve(dispatch(setSubjectName(data.name))))
   .then(() => dispatch(setSubjectSelectedTitles(
     Object.fromEntries(data.titles.map(({ id: titleId }) => [titleId, true]))

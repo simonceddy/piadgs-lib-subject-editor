@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useMemo, useState } from 'react';
 import TitleSummary from '../containers/TitleSummary';
 import { COLOUR_CLASS_NAMES } from '../shared/consts';
 
@@ -12,7 +12,7 @@ function SubjectTitleRow({
 }) {
   const [viewSummary, setViewSummary] = useState(false);
 
-  const Summary = useCallback(() => <TitleSummary id={title.id} />, [title]);
+  const Summary = useMemo(() => <TitleSummary id={title.id} />, [title]);
 
   return (
     <div
@@ -47,7 +47,7 @@ function SubjectTitleRow({
           </label>
         ) : <span className={titleStyles}>{title.title}</span>}
       </div>
-      {!viewSummary ? null : <Summary />}
+      {!viewSummary ? null : Summary }
     </div>
   );
 }
