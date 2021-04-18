@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import TitleSummary from '../containers/TitleSummary';
-import { COLOUR_CLASS_NAMES } from '../shared/consts';
+import TitleSummary from '../../containers/Subjects/TitleSummary';
+import { COLOUR_CLASS_NAMES } from '../../shared/consts';
 
 const titleStyles = 'py-1 px-2 my-0.5 flex flex-1 flex-row justify-between items-center';
 

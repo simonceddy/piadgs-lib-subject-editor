@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import ThemedButton from '../components/ThemedButton';
-import SubjectWindow from '../components/SubjectWindow';
-import SubjectNameField from '../components/SubjectNameField';
-import SubjectTitleList from '../components/SubjectTitleList';
-import ThemedDiv from '../components/ThemedDiv';
+import ThemedButton from '../../components/Subjects/ThemedButton';
+import SubjectWindow from '../../components/Subjects/SubjectWindow';
+import SubjectNameField from '../../components/Subjects/SubjectNameField';
+import SubjectTitleList from '../../components/Subjects/SubjectTitleList';
+import ThemedDiv from '../../components/Subjects/ThemedDiv';
 import {
   fetchSubject,
   setSubjectMessage,
   setSubjectName,
   setSubjectSelectedTitles, updateSubject
-} from '../store/actions/subjectActions';
+} from '../../store/actions/subjectActions';
 
 // TODO - less props - split responsibilities
 function Subject({
@@ -51,7 +51,10 @@ function Subject({
 
         <ThemedButton
           className="hover:underline"
-          onClick={onClose}
+          onClick={() => {
+            setMessage(null);
+            onClose();
+          }}
         >
           Close
         </ThemedButton>
@@ -91,6 +94,7 @@ function Subject({
         <ThemedDiv className="flex flex-row justify-evenly items-center pb-4 pt-2 mt-3 px-2 border-t w-full">
           <ThemedButton
             onClick={() => submitChanges({ id, name: subjectName })}
+            isSubmit
           >
             Save Changes
           </ThemedButton>

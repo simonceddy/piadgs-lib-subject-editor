@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import Subject from '../containers/Subject';
+import Subject from '../../containers/Subjects/Subject';
 import Modal from './Modal';
 // import ViewSubject from './ViewSubject';
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import SearchSubjectsForm from '../components/SearchSubjectsForm';
+import SearchSubjectsForm from '../../components/Subjects/SearchSubjectsForm';
 
 function SubjectSearch({ onResolved }) {
   const [input, setInput] = useState('');

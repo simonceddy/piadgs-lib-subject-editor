@@ -32,10 +32,19 @@ export const setSubjectMessage = (message) => ({
 
 export const updateSubject = (data) => (dispatch, getState) => {
   console.log(getState().subject.selectedTitles);
-  return axios.post('/subjects/update', data)
-    .then((res) => Promise.resolve(dispatch(setSubjectData(res.data.data)))
-      .then(() => dispatch(setSubjectMessage('Changes saved successfully!')))
-      .catch((err) => setSubjectMessage(`Error: ${err.message}`)))
+  const dataWithTitles = {
+    ...data,
+    titles: Object.keys(getState().subject.selectedTitles)
+  };
+  return axios.post('/subjects/update', dataWithTitles)
+    .then((res) => {
+      if (!res.data.data) {
+        return dispatch(setSubjectMessage('Error retrieving updated data!'));
+      }
+      return Promise.resolve(dispatch(setSubjectData(res.data.data)))
+        .then(() => dispatch(setSubjectMessage('Changes saved successfully!')))
+        .catch((err) => dispatch(setSubjectMessage(`Error: ${err.message}`)));
+    })
     .catch((err) => {
       console.log(err);
       return dispatch(setSubjectData({}));

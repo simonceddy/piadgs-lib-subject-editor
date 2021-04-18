@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import SubjectList from './components/SubjectList';
-import ThemedDiv from './components/ThemedDiv';
-import SubjectSearch from './containers/SubjectSearch';
+import SubjectList from './components/Subjects/SubjectList';
+import ThemedDiv from './components/Subjects/ThemedDiv';
+import SubjectSearch from './containers/Subjects/SubjectSearch';
 
 function App() {
   const [results, setResults] = useState([]);

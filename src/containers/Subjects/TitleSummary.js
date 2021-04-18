@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { setSubjectMessage } from '../store/actions/subjectActions';
+import { setSubjectMessage } from '../../store/actions/subjectActions';
 
 function TitleSummary({ id, setMessage }) {
   const [title, setTitle] = useState({});

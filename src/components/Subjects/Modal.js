@@ -1,4 +1,4 @@
-// import { COLOUR_CLASS_NAMES } from '../shared/consts';
+// import { COLOUR_CLASS_NAMES } from '../../shared/consts';
 
 function Modal({ children, onClose }) {
   return (

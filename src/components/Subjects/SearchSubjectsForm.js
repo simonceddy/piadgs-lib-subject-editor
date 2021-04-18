@@ -1,4 +1,4 @@
-import { COLOUR_CLASS_NAMES } from '../shared/consts';
+import { COLOUR_CLASS_NAMES } from '../../shared/consts';
 
 function SearchSubjectsForm({ input, setInput, onSubmit = () => null }) {
   return (
