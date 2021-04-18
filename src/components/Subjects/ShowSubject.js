@@ -19,10 +19,15 @@ function ShowSubject({ subject = {} }) {
       {visible ? SubjectModal : null}
       <div
         role="presentation"
-        className="cursor-pointer hover:underline m-0.5 p-1"
+        className="cursor-pointer hover:underline m-0.5 p-1 w-full flex flex-row justify-between items-start"
         onClick={() => setVisible(true)}
       >
-        {subject.name}
+        <span>
+          {subject.name}
+        </span>
+        <span>
+          {subject.titles ? subject.titles.length : 'No'} titles
+        </span>
       </div>
     </>
   );

@@ -1,19 +1,8 @@
-import axios from 'axios';
-import { useState } from 'react';
 import { connect } from 'react-redux';
 import SearchSubjectsForm from '../../components/Subjects/SearchSubjectsForm';
+import { performSearch, setSearchInput } from '../../store/actions';
 
-function SubjectSearch({ onResolved }) {
-  const [input, setInput] = useState('');
-
-  const submitSearch = (name) => {
-    axios.get(`/subjects/search?name=${name}`)
-      .then((res) => {
-        if (onResolved) onResolved(res);
-      })
-      .catch((err) => console.log(err));
-  };
-
+function SubjectSearch({ submitSearch, input, setInput }) {
   return (
     <SearchSubjectsForm
       input={input}
@@ -23,4 +12,13 @@ function SubjectSearch({ onResolved }) {
   );
 }
 
-export default connect()(SubjectSearch);
+const mapStateToProps = (state) => ({
+  input: state.subjectSearch.input
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setInput: (input) => dispatch(setSearchInput(input)),
+  submitSearch: (input) => dispatch(performSearch(input))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubjectSearch);
