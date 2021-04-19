@@ -3,8 +3,6 @@ import { sortPropAZ, sortPropLength } from '../../util/sort';
 
 export const SET_SEARCH_INPUT = 'SET_SEARCH_INPUT';
 export const SET_SEARCH_RESULTS = 'SET_SEARCH_RESULTS';
-export const SET_SORT_KEY = 'SET_SORT_KEY';
-export const SET_SORT_DIRECTION = 'SET_SORT_DIRECTION';
 export const SET_SORT_RESULTS = 'SET_SORT_RESULTS';
 
 export const setSearchInput = (input) => ({
@@ -22,11 +20,6 @@ export const setSortResults = (sortKey, sortDirection) => ({
   payload: { sortKey, sortDirection }
 });
 
-export const setSortDirection = (sortDirection) => ({
-  type: SET_SORT_DIRECTION,
-  payload: { sortDirection }
-});
-
 export const performSearch = (input) => (dispatch) => axios.get(
   `/subjects/search?name=${input}`
 )
@@ -38,7 +31,7 @@ const flipDirection = (direction) => (direction === 'ASC' ? 'DESC' : 'ASC');
 export const sortSearchResults = (key) => async (dispatch, getState) => {
   const { results, sortKey, sortDirection } = getState().subjectSearch;
   const isSameKey = key === sortKey;
-  console.log(sortDirection, isSameKey);
+  // console.log(sortDirection, isSameKey);
 
   const direction = isSameKey ? flipDirection(sortDirection) : sortDirection;
 
