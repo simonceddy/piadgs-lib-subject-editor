@@ -1,6 +1,6 @@
-function ResultRow({ subject = {} }) {
+function ResultRow({ subject = {}, onClick }) {
   return (
-    <tr id={`subject-row-${subject.id}`}>
+    <tr id={`subject-row-${subject.id}`} onClick={onClick}>
       <td>
         {subject.name}
       </td>
